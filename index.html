@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+            animation: backgroundAnimation 10s ease-in-out infinite alternate, gradientShift 20s infinite ease-in-out;
+        }
+
+        /* Background Animations */
+        @keyframes backgroundAnimation {
+            0% {
+                background: linear-gradient(135deg, #6e8efb, #a777e3);
+            }
+            100% {
+                background: linear-gradient(135deg, #f093fb, #f5576c);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        /* Floating bubbles for background effect */
+        .bubble {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: bubbleFloat 7s infinite ease-in-out;
+            opacity: 0.9;
+            filter: blur(3px);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
+
+        .bubble:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            animation-duration: 9s;
+            left: 20%;
+            top: 30%;
+        }
+
+        .bubble:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            animation-duration: 12s;
+            left: 70%;
+            top: 40%;
+        }
+
+        .bubble:nth-child(4) {
+            width: 60px;
+            height: 60px;
+            animation-duration: 8s;
+            left: 50%;
+            top: 80%;
+        }
+
+        @keyframes bubbleFloat {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(40px);
+            }
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 400px;
+            transform: scale(0.9);
+            transition: transform 0.6s ease, box-shadow 0.6s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container h2:hover {
+            color: #6e8efb;
+            text-shadow: 3px 3px 6px rgba(110, 142, 251, 0.5);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #777;
+            pointer-events: none;
+            transition: 0.3s ease all;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            padding-left: 60px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .input-group input:hover {
+            background-color: #f1f4ff;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #6e8efb;
+            box-shadow: 0 4px 12px rgba(110, 142, 251, 0.4);
+            background-color: #fff;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -8px;
+            font-size: 12px;
+            color: #6e8efb;
+            background-color: #fff;
+            padding: 0 5px;
+            left: 50px;
+        }
+
+        .input-group .icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #777;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6e8efb;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(110, 142, 251, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: #a777e3;
+            box-shadow: 0 6px 12px rgba(167, 119, 227, 0.4);
+        }
+
+        /* Add ripple effect to button on click */
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.4s ease;
+        }
+
+        button:active::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .success-message {
+            color: green;
+            font-size: 16px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <div class="form-container">
+        <form id="registrationForm">
+            <h2>Registration Form</h2>
+
+            <div class="input-group">
+                <span class="icon">👤</span>
+                <input type="text" id="username" name="username" placeholder=" " required>
+                <label for="username">Username</label>
+                <small class="error-message" id="usernameError">Username must be at least 3 characters long.</small>
+            </div>
+
+            <div class="input-group">
+                <span class="icon">✉️</span>
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">Email</label>
+                <small class="error-message" id="emailError">Please enter a valid email.</small>
+            </div>
+
+            <div class="input-group">
+                <span class="icon">🔒</span>
+                <input type="password" id="password" name="password" placeholder=" " required>
+                <label for="password">Password</label>
+                <small class="error-message" id="passwordError">Password must be at least 6 characters long.</small>
+            </div>
+
+                        <div class="input-group">
+                <span class="icon">🔑</span>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder=" " required>
+                <label for="confirmPassword">Confirm Password</label>
+                <small class="error-message" id="confirmPasswordError">Passwords do not match.</small>
+            </div>
+
+            <button type="submit">Register</button>
+            <div class="success-message" id="successMessage">Registration Successful!</div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+
+        const usernameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // Validate username
+            if (username.value.length < 3) {
+                usernameError.style.display = 'block';
+                isValid = false;
+            } else {
+                usernameError.style.display = 'none';
+            }
+
+            // Validate email
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!email.value.match(emailPattern)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+
+            // Validate password
+            if (password.value.length < 6) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+
+            // Validate confirm password
+            if (password.value !== confirmPassword.value) {
+                confirmPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                confirmPasswordError.style.display = 'none';
+            }
+
+            // If form is valid, show success message
+            if (isValid) {
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                    form.reset();
+                }, 3000);
+                event.preventDefault(); // Prevent form submission for demonstration purposes
+            } else {
+                event.preventDefault(); // Prevent form submission if there are errors
+            }
+        });
+    </script>
+</body>
+</html>
